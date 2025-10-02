@@ -1,4 +1,3 @@
-// DependencyInjector.java - 依赖注入器
 package com.glyceryl6.kinematic.core.dependency;
 
 import com.glyceryl6.kinematic.core.architecture.Component;
@@ -16,7 +15,6 @@ public class DependencyInjector {
 
     public static void injectDependencies(Component component, ComponentContext context) {
         List<DependencyInfo> dependencies = scanDependencies(component);
-
         for (DependencyInfo dependency : dependencies) {
             try {
                 Object dependencyInstance = resolveDependency(dependency, context);
@@ -36,7 +34,6 @@ public class DependencyInjector {
     private static List<DependencyInfo> scanDependencies(Component component) {
         List<DependencyInfo> dependencies = new ArrayList<>();
         Class<?> clazz = component.getClass();
-
         while (clazz != Object.class) {
             for (Field field : clazz.getDeclaredFields()) {
                 if (field.isAnnotationPresent(ComponentDependency.class)) {
@@ -44,6 +41,7 @@ public class DependencyInjector {
                     dependencies.add(new DependencyInfo(field, annotation));
                 }
             }
+
             clazz = clazz.getSuperclass();
         }
 
